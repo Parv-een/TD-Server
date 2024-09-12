@@ -1,5 +1,6 @@
 import express from "express";
 import { driverDummy } from './DummyData/Driver.js';
+import Driver from "../models/Driver.js";
 
 const driverRouter = express.Router();
 
@@ -8,7 +9,7 @@ driverRouter.get("/:driverID", async (_, res) => {
     
     try {
 
-        const user = await User.findById(userId);
+        const user = await Driver.findById(userId);
       if (!user) res.status(404).send(USER_NOT_FOUND_MESSAGE);
     
     

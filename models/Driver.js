@@ -8,16 +8,23 @@ const driverSchema = new mongoose.Schema({
     email: { type: String, required: true },
     phoneNumber: { type: Number, required: true },
     status: { type: String, required: true },
-    address: { type: String, required: true },
+    address: { 
+        type: {
+            street: { type: String, required: true },
+            number: { type: Number, required: true },
+            city: { type: String, required: true },
+            state: { type: String, required: true },
+            zip: { type: String, required: true },
+            country: { type: String, required: true },
+            unit: { type: String },
+        },
+        required: true,
+     },
   
-});
+drivers: [{ type: mongoose.Types.ObjectId, required: true, ref: "Driverlist" }],
 
-productSchema.method("toJSON", function () {
-  const { _id, __v, ...driver } = this.toObject();
-  driver.id = _id;
-  return driver;
 });
 
 const Driver = mongoose.model("Driver", driverSchema);
 
-export default Product;
+export default Driver;

@@ -3,13 +3,28 @@ import { driverDummy } from './DummyData/Driver.js';
 
 const driverRouter = express.Router();
 
+driverRouter.get("/:driverID", async (_, res) => {
+    const userId = req.params.userId;
+    
+    try {
 
-driverRouter.get("/", async (_, res) => {
+        const user = await User.findById(userId);
+      if (!user) res.status(404).send(USER_NOT_FOUND_MESSAGE);
     
-    console.log("Hello World 2");
-    res.send(driverDummy);
     
-});
+        return res.send({
+            driverId: user.id,
+            firstName: user.firstName,
+           lastName: user.lastName,
+            email: user.email,
+            dateOfBirth: user.dateOfBirth,
+            address: user.address,
+     });
+    } catch (error) {
+           return res.status(500).send(error);
+    }
+    
+    });
 
 driverRouter.post("/", (req, res) => {
     const newDriver = {
@@ -45,13 +60,11 @@ driverRouter.delete("/: driverID"), (req, res) => {
     if (driverToDelete === -1)
         return res.status(404).send("Driver not found");
 
-
     const deletedDriver = driverDummy.splice(driverToDelete, 1);
 
     res.send(deletedDriver[0]);
   
     
 }
-
 
 export default driverRouter;
